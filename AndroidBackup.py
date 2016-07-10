@@ -1,11 +1,14 @@
-#! /usr/bin/python3.4
+#! /usr/bin/python3.5
 
 import ui
-#import logic
+import logic
 
 def main():
-    interf = ui.interface();
-    interf.conf.set_config()
+    #interf = ui.interface();
+   # interf.conf.set_config()
+    configuration = logic.config_connection()
+    configuration.tempDevice.temp_func();
+
 
 if __name__ == '__main__':
     main()

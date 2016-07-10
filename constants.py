@@ -2,9 +2,9 @@
 
 UNIX_DEVICES_PATH = '/run/user/1000/gvfs/'
 
-CONFIG_FILE_NAME  = '/config'
+CONFIG_FILE_PATH  = '/config'
 
-CHOOSE_DEVICE     = 'Выберите устройство: '
+WHERE_IS_FROM_DIR     = 'Выберите устройство: '
 
 CHOOSE_BACKUP_DIR = 'Выберите директорию бэкапа: '
 
