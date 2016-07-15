@@ -37,7 +37,6 @@ def main():
     configuration = logic.configConnection()
     session = configuration.get_local_config();
     uns = logic.unsynch_files();
-    print(session)
     uns.synch_all_files(session[0], session[1]);
     ui.io.simple_print("That's all")
 

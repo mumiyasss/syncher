@@ -19,8 +19,6 @@ class generalProgramSettings:
         self.CONFIG_FILE_PATH = self.PROGRAM_PATH + CONFIG_FILE_NAME
 
 
-
-
     def get_program_path(self):
         return self.PROGRAM_PATH
 
@@ -32,15 +30,14 @@ class generalProgramSettings:
 
 class configConnection(generalProgramSettings):
     
-
     def __init__(self):
         self.update_program_path();
         self.update_config_file();
 
-        #self._local_conf = self.get_config_from_file(self.get_config_file_path())
-        #if not self._local_conf:
-        self._local_conf = self.set_config_localy();
-            #self.write_config_to_file(self.get_config_file_path(), self._local_conf);
+        self._local_conf = self.get_config_from_file(self.get_config_file_path())
+        if not self._local_conf:
+            self._local_conf = self.set_config_localy();
+            self.write_config_to_file(self.get_config_file_path(), self._local_conf);
             
             
     ##
@@ -53,7 +50,7 @@ class configConnection(generalProgramSettings):
         '''
 	    try:
 	        self.confFile = open(CONF, 'r')
-	        self.config = [line.strip() for line in confFile]
+	        self.config = [line.strip() for line in self.confFile]
 	        return self.config
 	    except Exception:
 	        return None
@@ -65,7 +62,7 @@ class configConnection(generalProgramSettings):
             в файл по пути CONFIG_FILE_PATH
         '''
         ### Открываем файл настроек
-        self.confFile = open(self.get_config_file_path(), 'w')
+        self.confFile = open(CONFIG_FILE_PATH, 'w')
         for dev in CONF_LIST_FROM_UI:
             self.confFile.write(dev + "\n")
 
@@ -74,12 +71,10 @@ class configConnection(generalProgramSettings):
     ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ##
     def set_config_localy(self):
 
-        print(WHERE_IS_FROM_DIR)
-    ##########    from_dir = self.from_dir_choose()
-        from_dir = "/home/kolya/MY"
-        to_dir   = "/home/kolya/NEWPROJ"
-        print(WHERE_IS_TO_DIR)
-    ##########    to_dir   = self.to_dir_choose()
+        ui.io.simple_print(WHERE_IS_FROM_DIR)
+        from_dir = self.from_dir_choose()
+        ui.io.simple_print(WHERE_IS_TO_DIR)
+        to_dir   = self.to_dir_choose()
         
         return [from_dir, to_dir]
             
@@ -110,15 +105,16 @@ class unsynch_files:
         Функция синхронизирования
         '''
         os.chdir(FROM)
-        print("Поиск несинхронизированных объектов...")
+        ui.io.simple_print(SEARCHING_UNSYNCHRONIZED_OBJECTS_FROM)
         FROMFiles = self.list_files(FROM)
+        ui.io.simple_print(SEARCHING_UNSYNCHRONIZED_OBJECTS_TO)
         TOFiles   = self.list_files(TO)
        
         synFiles = self.unsynch_files(FROMFiles, TOFiles)
-        print("Синхронизация...")
+        ui.io.simple_print(SYNCHRONIZATION_STARTED)
         os.chdir(FROM)
         for sf in synFiles:
-            print("Синхронизация: ", sf)
+            ui.io.simple_print(FILE_SYNCHING, sf)
             name = sf[1:]
             try:
                 shutil.copyfile(sf, TO+name)
@@ -128,7 +124,7 @@ class unsynch_files:
                 os.mkdir(TO+thisDir)
                 shutil.copyfile(sf, TO+name)
 
-        print("Синхронизация завершенна.\n\n")
+        ui.io.simple_print(SYNCHRONIZATION_FINISHED)
 
 
 
@@ -149,7 +145,6 @@ class unsynch_files:
 
     # Возвращает список всех файлов в данной директории
     def list_files(self, filesPath):
-        print("Собираю список файлов...")
         os.chdir(filesPath)
         filesList = []
         
