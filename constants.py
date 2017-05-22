@@ -22,5 +22,7 @@ FILE_SYNCHING     = "Синхронизация: "
 
 COLLECTING_FILE_LIST = "Собираю список файлов..."
 
+INTERNAL_STORAGE = "Internal storage"
+
 
 

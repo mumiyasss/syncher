@@ -24,9 +24,7 @@ class generalProgramSettings:
 
     def get_config_file_path(self):
         return self.CONFIG_FILE_PATH;
-
-
-########################################################        
+        
 
 class configConnection(generalProgramSettings):
     
@@ -38,6 +36,7 @@ class configConnection(generalProgramSettings):
         if not self._local_conf:
             self._local_conf = self.set_config_localy();
             self.write_config_to_file(self.get_config_file_path(), self._local_conf);
+            exit(0)
             
             
     ##
@@ -66,37 +65,32 @@ class configConnection(generalProgramSettings):
         for dev in CONF_LIST_FROM_UI:
             self.confFile.write(dev + "\n")
 
-    ##
-    ## Operations with config localy in RAM
-    ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ##
     def set_config_localy(self):
-
+        '''
+            Operations with config localy in RAM
+        '''
         ui.io.simple_print(WHERE_IS_FROM_DIR)
         from_dir = self.from_dir_choose()
         ui.io.simple_print(WHERE_IS_TO_DIR)
         to_dir   = self.to_dir_choose()
         
         return [from_dir, to_dir]
-            
-    
+                
     def get_local_config(self):
         return self._local_conf;
-    
-
 
     ##
     ## Choosing from/to destinations
     ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ## ##
     def from_dir_choose(self):
+        '''
+            Choosing from/to destinations
+        '''
         return ui.io.simple_input()
 
     def to_dir_choose(self):
         return ui.io.simple_input()   
-     
-
-
-########################################################
-
+    
 
 class unsynch_files:
    
@@ -127,7 +121,6 @@ class unsynch_files:
         ui.io.simple_print(SYNCHRONIZATION_FINISHED)
 
 
-
     # Выбирает несинхронизированные объекты
     def unsynch_files(self, FROMFiles, TOFiles):
         unsynched = []
@@ -141,8 +134,6 @@ class unsynch_files:
             
         return unsynched
 
-
-
     # Возвращает список всех файлов в данной директории
     def list_files(self, filesPath):
         os.chdir(filesPath)
@@ -153,7 +144,6 @@ class unsynch_files:
                 filesList.append(os.path.join(location, nm))
         
         return filesList
-#########################################################
 
 	    
 	        
